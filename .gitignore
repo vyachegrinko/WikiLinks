@@ -1,2 +1,6 @@
 aws_creds.json
 *.pem
+*.bz2
+*.gz
+*.xml
+

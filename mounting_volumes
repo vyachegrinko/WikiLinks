@@ -1,0 +1,26 @@
+#attach a volume
+go to the volume in the AWS console and under actions, select 'attach.' choose the ec2 instance to attach to
+
+
+#mount a volume
+once the volume is attached, it must be mounted. ssh into your instance:
+ssh -i "filename.pem" root@<master's public DNS>
+
+list attached volumes:
+lsblk
+
+determine if your volume has a file structure (if it does not, then we will need to make one ourselves):
+sudo file -s device
+
+If the output of the previous command shows simply data for the device, then there is no file system on the device and you need to create one like so:
+
+sudo mkfs -t ext4 device_name
+
+make a directory to mount the volume to:
+sudo mkdir mount_point
+
+mount the device:
+sudo mount device_name mount_point
+
+and finally...update file permissions:
+sudo chmod 777
