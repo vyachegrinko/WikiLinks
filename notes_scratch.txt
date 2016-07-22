@@ -1,0 +1,24 @@
+degrees of separation
+wiki page recommender
+unconstructive comment identifier
+cluster documents in some way, determine cluster meanings
+
+STEPS (NOTES FOR FINAL PRESENTATION)
+-create volume with all of english wiki articles (minus the talk pages, past revisions, and imagery): 500 GB
+-since Spark reads in data 1 line at a time, xml is not an appropriate format. Unfortunately, when your dataset is 63GB, you can't easily transform the file...
+
+it took ~20 minutes to perform a simple logic test for the whole 15 million pages
+
+QUESTIONS FOR TIM:
+why are there so many volumes?
+
+
+
+Nikki: haaldeborgh@gmail.com
+
+1 master, 18 slaves #
+each slave has 2 cores and 7.5GB ram
+
+to put each article on 1 line, the process took:
+started at 4:45
+ended at ?:??
