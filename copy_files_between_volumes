@@ -1,8 +1,0 @@
-#commands for moving enwiki to new volume
-from ~/ run the following copy statements:
-cp ~/wiki/*enwiki-* ~/enwiki
-
-unzip .gz and .bz2 files:
-
-gunzip filename.gz
-bzip2 -d filename.bz2
