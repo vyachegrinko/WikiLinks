@@ -20,7 +20,10 @@ This project explores the connections between pages in wikipedia. It also serves
 2)  launch a spark cluster (see spark_cluster_initialization.md)
     ------------put in a brief description of cluster here--------
 
-3)  preprocess xml data (see preprocess_xml.py and ...... for code)
+3)  load data into S3 bucket and onto spark cluster master node:
+    follow the steps described in loading_data_to_aws.md
+
+4)  preprocess xml data (see preprocess_xml.py and ...... for code)
     log into master node:
     spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster
 
@@ -33,33 +36,15 @@ This project explores the connections between pages in wikipedia. It also serves
     open new ipython notebook session:
     IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --packages HyukjinKwon:spark-xml:0.1.1-s_2.10 --executor-memory 5G --driver-memory 5G &
 
-    run the script in preprocess_xml.py
+    run the script in preprocess_xml.py. This script moves each wikipedia article and all of its xml lines into a single line. This is necessary for Spark to be able to parallelize the transformations to come.
 
-#failed attempt to use databricks spark-xml tool... :(
-from pyspark.sql import SQLContext
-sqlContext = SQLContext(sc)
+    ***note*** there is also this really cool tool developed by databricks that allows you to read xml directly into a Spark SQL context, however I was unable to get it to work with pyspark...in any case, here are a few commands:
 
-df = sqlContext.read.format('com.databricks.spark.xml').options(rowTag='page').load('enwiki-latest-pages-articles.xml')
+    open ipython notebook session with the spark-xml package included:
+    IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --packages HyukjinKwon:spark-xml:0.1.1-s_2.10 --executor-memory 5G --driver-memory 5G &
 
+    load xml into SQL context:
+    from pyspark.sql import SQLContext
+    sqlContext = SQLContext(sc)
 
-
-
-##temp notes to myself
-s3://wiki-2016/enwiki_2016.txt
-f = urllib2.urlopen('https://s3.amazonaws.com/wiki-2016/enwiki_2016.txt')
-
-
-import numpy as np
-import pickle as pkl
-import re
-
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-from pyspark.mllib.clustering import KMeans
-from collections import Counter
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-import string
-PUNCTUATION = set(string.punctuation)
-STOPWORDS = set(stopwords.words('english'))
+5)  and finally, we are in a position to leverage the power of Spark!!!

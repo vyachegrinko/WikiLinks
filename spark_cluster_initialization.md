@@ -12,12 +12,13 @@ echo $AWS__ACCESS_KEY_ID
 #update .pem file permissions
 chmod 400 "student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem"
 
-#launch ec2 cluster with 6 slaves
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 20 --copy-aws-credentials --ebs-vol-size=500 launch wiki_cluster
+#launch ec2 cluster with 18 slaves
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 9 --instance-type=m4.xlarge --copy-aws-credentials --ebs-vol-size=500 launch wiki_cluster_9s
 
 -k: Name of your key-pair
 -i: Path to your (.pem) file
 -r: AWS region for your key-pair
+--instance-type: instance type (m4.xlarge has 64GB memory, 16 vCPUs)
 -s: The number of workers
 
 #secure-copy over the install script to master node
@@ -37,12 +38,15 @@ IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --executor-memory 5
 
 when specifying the executor and driver memory, allocate it so that you use 60-75% of your memory. In this example, the master (driver) and slaves are all of EC2 instance type M1-large (the default), which have 7.5GB of RAM each. You can specify different instance types by adding the --
 
-#update permissions to port 8080
+#update permissions and access notebook server and spark UI
+update file permissions for ports 8080 and 8888:
 go to AWS security groups, select master node, add rule to inbound security rules, give all ip addresses (0.0.0.0/0) access to port 8080
 
-#open notebook server:
-go here:
+go here to open notebook server:
 http://<masters public DNS>:8888
+
+go here to access Spark's UI:
+http://<masters public DNS>:8080
 
 #open cluster user interface
 go here:

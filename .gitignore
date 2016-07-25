@@ -3,4 +3,8 @@ aws_creds.json
 *.bz2
 *.gz
 *.xml
-
+notes_to_self.txt
+ola.txt
+ola.txt.crdownload
+enwiki-latest-all-titles
+enwiki-latest-pagelinks.sql
