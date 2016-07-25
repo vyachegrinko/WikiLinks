@@ -22,3 +22,8 @@ each slave has 2 cores and 7.5GB ram
 to put each article on 1 line, the process took:
 started at 4:45
 ended at ?:??
+
+
+Do Data Science after Hitler
+discuss most important nodes (importance classified by how many paths crossed through that node on their way to Data Science/Hitler) in order to do this, I will have to consider that there can be multiple minimum distances for each node
+mention that paths are directional (shortest path to Hitler will not necessarily be the same as path from Hitler)
