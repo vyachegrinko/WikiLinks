@@ -3,7 +3,7 @@ import urllib2
 import pickle as pkl
 import itertools
 
-load_s3_data = sc.textFile("s3n://{}:{}@wiki-2016/one_l_a.txt".format("AKIAJZYEOMY6UOJF4JIA","a5dr1VJc3zzcF4KapzJjBeKDpVRSwHEgVAg20we2"),100)
+load_s3_data = sc.textFile("s3n://{}:{}@wiki-2016/one_l_a.txt".format(access-key,secret-key),100)
 
 ten_thousand = sc.parallelize(load_s3_data.take(10000),100)
 ten_thousand.getNumPartitions()
@@ -111,7 +111,7 @@ connecting_paths.map(lambda x: x[2]).mean()
 
 x,y = paths.map(lambda x: x[2]).histogram([-1.5,0,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5])
 
-paths.coalesce(4).saveAsTextFile('s3n://{}:{}@wiki-2016/paths_coalesce4'.format("AKIAJZYEOMY6UOJF4JIA","a5dr1VJc3zzcF4KapzJjBeKDpVRSwHEgVAg20we2"))
+paths.coalesce(4).saveAsTextFile('s3n://{}:{}@wiki-2016/paths_coalesce4'.format(access-key,secret-key))
 
 pkl.dump(graph, open("//root/graph.pkl", "wb"))
 
