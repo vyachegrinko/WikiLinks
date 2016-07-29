@@ -2,6 +2,14 @@ import re
 import urllib2
 import pickle as pkl
 import itertools
+from pyspark import SparkConf, SparkContext
+
+# In Jupyter you have to stop the current context first
+sc.stop()
+# Create new config
+conf = (SparkConf().set("spark.driver.maxResultSize", "50g"))
+# Create new context
+sc = SparkContext(conf=conf)
 
 load_s3_data = sc.textFile("s3n://{}:{}@wiki-2016/one_l_a.txt".format(access-key,secret-key),100)
 
@@ -10,7 +18,7 @@ ten_thousand.getNumPartitions()
 
 ten_thousand.toDebugString()
 
-ten_thousand = ten_thousand.filter(lambda line: '<redirect title=' not in line)
+ten_thousand = ten_thousand.filter(lambda line: '<redirect title=' not in line).filter(lambda x: x.startswith('</mediawiki')==False)
 ten_thousand.count()
 
 '''
@@ -50,7 +58,6 @@ def get_title_and_wikilinks(line):
     return (title,wikilinks)
 
 titles_links = ten_thousand.map(get_title_and_wikilinks)
-
 t_broadcast = sc.broadcast(titles_links.map(lambda x: x[0]).collect())
 
 '''

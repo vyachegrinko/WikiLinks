@@ -1,5 +1,5 @@
 #process xml data to .txt file where each line is one article
-#run this somewhere with at least 60GB of free disk space
+#unzip the wikipedia xml download (gunzip <file_name>, or bzip2 -d <file_name>)
 
 f = open('enwiki_2016_ect.txt')
 w = open('one_line_articles.txt','w')

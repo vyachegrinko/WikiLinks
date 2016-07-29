@@ -1,7 +1,7 @@
 ###set up aws_creds in bash profile:
 nano .zshrc
-export AWS_ACCESS_KEY_ID=  (no quotes...)
-export AWS_SECRET_ACCESS_KEY=  (none here either...)
+export AWS_ACCESS_KEY_ID=(no quotes...)
+export AWS_SECRET_ACCESS_KEY=(none here either...)
 source .zshrc
 echo $AWS_SECRET_ACCESS_KEY
 echo $AWS__ACCESS_KEY_ID
@@ -12,20 +12,20 @@ echo $AWS__ACCESS_KEY_ID
 ###update .pem file permissions
 chmod 400 "student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem"
 
-###launch ec2 cluster with 18 slaves
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 9 --instance-type=m4.xlarge --copy-aws-credentials --ebs-vol-size=500 launch wiki_cluster_9s
+###launch ec2 cluster
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 1 --instance-type=cr1.8xlarge --copy-aws-credentials --ebs-vol-size=200 launch wiki_cluster_1s
 
 -k: Name of your key-pair
 -i: Path to your (.pem) file
 -r: AWS region for your key-pair
---instance-type: instance type (m4.xlarge has 64GB memory, 16 vCPUs)
+--instance-type: instance type (I tried these configerations: 18 slaves m1.large, 9 slaves m4.xlarge, 1 slave cr1.8xlarge)
 -s: The number of workers
 
 ###secure-copy over the install script to master node
 scp -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem student_work/Sean/wikilinks/install_scripts/install_these root@<masters public DNS>:/root/.
 
 ###log into master node
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster_1s
 
 ###run install script
 source install_these
@@ -34,7 +34,7 @@ source install_these
 tmux new -s notebook
 
 ###open new python notebook sever
-IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --executor-memory 5G --driver-memory 5G &
+IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --executor-memory 180G --driver-memory 180G &
 
 when specifying the executor and driver memory, allocate it so that you use 60-75% of your memory. In this example, the master (driver) and slaves are all of EC2 instance type M1-large (the default), which have 7.5GB of RAM each. You can specify different instance types by adding the --
 

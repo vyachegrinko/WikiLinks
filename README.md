@@ -1,5 +1,5 @@
 # WikiLinks
-This project explores the connections between pages in wikipedia. It also serves as my capstone project for the Galvanize Data Science Immersive program. The project consists of three parts: (1) a page link recommender system that identifies pages that aren't linked together that should be (2) A solution to the game popularized by Reddit, 6 degrees of separation from Hitler (3) a 'fraud detection' program that predicts whether or not a new wikipedia edit will be labeled as "non-constructive"
+This project explores the connections between pages in wikipedia and serves as my capstone project for completion of the Galvanize Data Science Immersive program. The project consists of three parts: (1) a wikipedia "concept" clusterer, which identifies clusters of articles that are strongly linked together via wikilinks (2) a page link recommender system that identifies pages that aren't linked together that should be (3) A solution to the game popularized by Reddit, 6 degrees of separation from <article title>. The following steps will allow you to reproduce the project.
 
 ##Steps
 
@@ -17,34 +17,15 @@ This project explores the connections between pages in wikipedia. It also serves
 
     this wikipedia dump contains just shy of 15 million articles!
 
-2)  launch a spark cluster (see spark_cluster_initialization.md)
-    ------------put in a brief description of cluster here--------
+2)  preprocess xml data (see preprocess_xml.py for code). Preprocessing includes placing every article on its own line. This is necessary in order for Spark to run computations in parallel on the data set
 
-3)  load data into S3 bucket and onto spark cluster master node:
-    follow the steps described in loading_data_to_aws.md
+3)  load data into S3 bucket and onto spark cluster master node (see moving_data_in_aws.md).
 
-4)  preprocess xml data (see preprocess_xml.py and ...... for code)
-    log into master node:
-    spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster
+4)  launch a spark cluster (see spark_cluster_initialization.md). For this project, I used two AWS EC2 instances, both of type cr1.8xlarge, which have 240GB of RAM and are optimized for in-memory computations- ideal settings for dealing with large networks.
 
-    navigate to the /mnt directory (ths directory has 300+GB of disk space):
-    cd /mnt
 
-    create new file (this will hold the processed xml data):
-    touch one_line_articles.txt
+    ***note*** there is a useful tool developed by databricks that allows you to read xml directly into a Spark SQL context, however it is not compatible with pyspark
 
-    open new ipython notebook session:
-    IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --packages HyukjinKwon:spark-xml:0.1.1-s_2.10 --executor-memory 5G --driver-memory 5G &
+5)  create wikilinks graph, find shortest path between any article and the chosen target article, and create page link recommendations (see spark_make_graph.py).
 
-    run the script in preprocess_xml.py. This script moves each wikipedia article and all of its xml lines into a single line. This is necessary for Spark to be able to parallelize the transformations to come.
-
-    ***note*** there is also this really cool tool developed by databricks that allows you to read xml directly into a Spark SQL context, however I was unable to get it to work with pyspark...in any case, here are a few commands:
-
-    open ipython notebook session with the spark-xml package included:
-    IPYTHON_OPTS="notebook --ip=0.0.0.0" /root/spark/bin/pyspark --packages HyukjinKwon:spark-xml:0.1.1-s_2.10 --executor-memory 5G --driver-memory 5G &
-
-    load xml into SQL context:
-    from pyspark.sql import SQLContext
-    sqlContext = SQLContext(sc)
-
-5)  and finally, we are in a position to leverage the power of Spark!!!
+6)  copy graph data to local machine and create graph plot in gephi (see create_gephi_file_from_graph.py)

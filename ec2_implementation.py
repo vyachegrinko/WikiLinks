@@ -1,9 +1,49 @@
-'''
-touch ola.txt
-aws s3 cp s3://wiki-2016/one_l_a.txt ola.txt
+#create gephi-importable wikilinks graph
 
-ipython
-'''
+import re
+
+f = open('ola.txt.crdownload')
+w = open('gephi_graph2.tsv','w')
+
+f.write('Source\tTarget\n')
+for line in f:
+    if '<redirect title=' in line:
+        continue
+    if '</mediawiki' in line:
+        continue
+    title = re.findall('<title>(.*)</title>?',line)[0]
+    wl = re.findall('\[\[(.*?)\]\]',line)
+    wikilinks = set()
+    for link in wl:
+        if 'File:' in link or 'User:' in link:
+            continue
+        wikilinks.add(link.split('|')[0])
+    for link in wikilinks:
+        w.write(title)
+        w.write('\t')
+        w.write(link)
+        w.write('\n')
+
+f.close()
+w.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def get_title_and_wikilinks(line):
     title = re.findall('<title>(.*)</title>?',line)[0]
@@ -26,7 +66,7 @@ def update_paths_out(dist,Q,dist_dict,graph)
     return next_Q
 
 
-def find_all_nodes(path_dict_out,graph, start='Hitler'): #graph is a tuple of (node, (tuple of edges))
+def find_all_nodes(path_dict_out,graph, start='Adolf Hitler'): #graph is a tuple of (node, (tuple of edges))
     Q = [start]
     dist = 1
     while Q:
@@ -43,7 +83,7 @@ if __main__=="__name__":
         a = get_title_and_wikilinks(line)
         graph[a[0]] = a[1]
 
-    path_dict_out = {'Hitler':(['Hitler'],0)}
+    path_dict_out = {'Adolf Hitler':(['Adolf Hitler'],0)}
 
     find_all_nodes(path_dict_out,graph)
     for title in graph:
