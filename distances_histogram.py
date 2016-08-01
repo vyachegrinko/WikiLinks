@@ -33,7 +33,7 @@ def find_all_nodes(graph, start='Graph theory'): #graph is a tuple of (node, (tu
             path_dict_out[title] = ([],-1)
     return path_dict_out, dist
 
-target = 'Leg theory'
+target = 'World War II'
 path_dict_out, max_dist = find_all_nodes(graph,start=target)
 
 #identify nodes that the target failed to connect with by labelling these nodes with an empty list and a degree of separation of -1
@@ -55,4 +55,5 @@ sns.barplot(x,y,palette=current_palette)
 plt.title('Path Distances from the "{}" Article'.format(target),fontsize=24)
 plt.xlabel('distance',fontsize=15)
 plt.ylabel('article count',fontsize=15)
+plt.ylim(0,20000)
 #plt.show()
