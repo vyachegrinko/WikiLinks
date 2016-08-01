@@ -6,7 +6,7 @@ aws s3 cp enwiki-latest-pages-articles.xml s3://wiki-2016/enwiki-latest-pages-ar
 
 -make file public (right click it and click on "make public")
 
-###copy wiki to ec2 from S3
+###copy wiki from S3 to ec2
 -log into ec2 instance:
 spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster
 

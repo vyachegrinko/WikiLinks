@@ -1,7 +1,32 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_csv('gephi_docs/nodes_50k.tsv',sep='\t')
+
+x = np.array(df['pageranks'])
+sns.distplot(x,bins=10**np.linspace(-6,-2,50),color='blue')
+plt.xscale('log')
+plt.xlim(.000003,.004)
+plt.title('PageRank Distribution',fontsize=36)
+plt.xlabel('PageRank',fontsize=22)
+plt.ylabel('article count',fontsize=22)
+plt.tick_params(labelsize=18)
+
+import pickle
+graph = pickle.load(open('gephi_docs/graph_50k.pkl','rb'))
+
+x = []
+for k,v in graph.iteritems():
+    x.append(len(v))
+sns.distplot(x,bins=100,color='blue',kde=False)
+plt.xlim(0,200)
+plt.title('WikiLinks per Article',fontsize=36)
+plt.xlabel('number of WikiLinks',fontsize=22)
+plt.ylabel('article count',fontsize=22)
+plt.tick_params(labelsize=18)
+
 df.groupby('modularity_class').count()
 df = df[df['modularity_class'] < 24]
 df = df[df['modularity_class'] != 18]

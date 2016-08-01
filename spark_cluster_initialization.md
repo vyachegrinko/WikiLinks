@@ -58,7 +58,7 @@ spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Se
 when paused, the cluster is only charged for storage space (not ec2 rental space)
 
 ###un-pause a cluster:
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 start wiki_cluster
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 start wiki_cluster_1s
 
 ###ssh into EC2 instance:
 ssh -i "Galvanize_Sean_ONeal.pem" root@<masters public DNS>

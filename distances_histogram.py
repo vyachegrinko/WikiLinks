@@ -52,8 +52,9 @@ for k,v in dist_dict.iteritems():
 
 current_palette = sns.color_palette(sns.diverging_palette(145, 280, s=85, l=25, n=max_dist))
 sns.barplot(x,y,palette=current_palette)
-plt.title('Path Distances from the "{}" Article'.format(target),fontsize=24)
-plt.xlabel('distance',fontsize=15)
-plt.ylabel('article count',fontsize=15)
+plt.title('Path Distances from the "{}" Article'.format(target),fontsize=32)
+plt.xlabel('distance',fontsize=22)
+plt.ylabel('article count',fontsize=22)
 plt.ylim(0,20000)
-#plt.show()
+plt.tick_params(labelsize=18)
+plt.show()
