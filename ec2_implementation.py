@@ -1,39 +1,99 @@
-#create gephi-importable wikilinks graph
-
+#create gephi-importable wikilinks graph from one-line-articles.txt
 import re
 
 f = open('ola.txt.crdownload')
-w = open('gephi_graph2.tsv','w')
+w = open('gephi_graph.tsv','w')
 
-f.write('Source\tTarget\n')
+count = 0
+w.write('Source\tTarget')
 for line in f:
+    if count == 50000:
+        break
     if '<redirect title=' in line:
         continue
     if '</mediawiki' in line:
         continue
-    title = re.findall('<title>(.*)</title>?',line)[0]
     wl = re.findall('\[\[(.*?)\]\]',line)
+    title = re.findall('<title>(.*)</title>?',line)[0]
+    if 'Wikipedia:' in title or 'Template:' in title or 'Portal:' in title or 'File:' in title or 'Category:' in title or '\t' in title or 'MediaWiki' in title:
+        continue
     wikilinks = set()
     for link in wl:
-        if 'File:' in link or 'User:' in link:
+        if 'File:' in link or 'User:' in link or 'Wikipedia:' in link or '\t' in link:
+            continue
+        if len(link) > 160:
             continue
         wikilinks.add(link.split('|')[0])
+    if len(wikilinks) == 0:
+        continue
+    count += 1
     for link in wikilinks:
+        w.write('\n')
         w.write(title)
         w.write('\t')
         w.write(link)
-        w.write('\n')
 
 f.close()
 w.close()
 
 
 
+!touch gephi_graph2.tsv
+f.close()
+w.close()
+f = open('gephi_graph.tsv')
+w = open('gephi_graph2.tsv','w')
+
+for line in f:
+    if '\t\t' in line or '\t\n' in line or '\n\t' in line or line == '\n':
+        continue
+    if len(line.split('\t')) < 2:
+        continue
+    w.write(line)
+w.write('test\ttest')
 
 
 
 
 
+
+########create dictionary from one-line-articles.txt
+import re
+
+f = open('ola.txt.crdownload')
+w = open('gephi_graph.tsv','w')
+
+count = 0
+w.write('Source\tTarget')
+for line in f:
+    if count == 50000:
+        break
+    if '<redirect title=' in line:
+        continue
+    if '</mediawiki' in line:
+        continue
+    wl = re.findall('\[\[(.*?)\]\]',line)
+    title = re.findall('<title>(.*)</title>?',line)[0]
+    if 'Wikipedia:' in title or 'Template:' in title or 'Portal:' in title or 'File:' in title or 'Category:' in title or '\t' in title or 'MediaWiki' in title:
+        continue
+    wikilinks = set()
+    for link in wl:
+        if 'File:' in link or 'User:' in link or 'Wikipedia:' in link or '\t' in link:
+            continue
+        if len(link) > 160:
+            continue
+        wikilinks.add(link.split('|')[0])
+    if len(wikilinks) == 0:
+        continue
+    count += 1
+    for link in wikilinks:
+        w.write('\n')
+        w.write(title)
+        w.write('\t')
+        w.write(link)
+
+f.close()
+w.close()
 
 
 

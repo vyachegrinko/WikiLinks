@@ -1,3 +1,4 @@
+#f = urllib2.urlopen('https://s3.amazonaws.com/wiki-2016/one_l_a.txt')
 f = open('enwiki-latest-pages-articles.xml')
 w = open('articles_sample.txt','w')
 
@@ -6,7 +7,7 @@ for line in f:
     if line.startswith('  </page>'):
         count += 1
     w.write(line)
-    if count == 10:
+    if count == 1000:
         break
 w.close()
 f.close()
