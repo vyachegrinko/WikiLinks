@@ -19,7 +19,7 @@ def update_paths_out(dist,Q,path_dict_out,graph):
     return next_Q, path_dict_out
 
 #graph is a dicitonary containing nodes as keys and a set of outbound connections as values
-def find_all_nodes(graph, start='Graph theory'): #graph is a tuple of (node, (tuple of edges))
+def find_all_nodes(graph, start='World War II'): #graph is a tuple of (node, (tuple of edges))
     path_dict_out = {start:([start],0)}
     Q = [start]
     dist = 1
