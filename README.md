@@ -1,5 +1,5 @@
 # WikiLinks
-This project explores the connections between pages in wikipedia and serves as my capstone project for completion of the Galvanize Data Science Immersive program. The project consists of three parts: (1) a wikipedia "concept" clusterer, which identifies clusters of articles that are strongly linked together via wikilinks (2) a page link recommender system that identifies pages that aren't linked together that should be (3) A solution to the game popularized by Reddit, 6 degrees of separation from <article title>. The following steps will allow you to reproduce the project.
+This project explores the connections between pages in wikipedia and serves as my capstone project for completion of the Galvanize Data Science Immersive program. The project consists of three parts: (1) a wikipedia "concept" clusterer, which identifies clusters of articles that are strongly linked together via wikilinks (2) a page link recommender system that identifies pages that aren't linked together that should be (3) A solution to the game popularized by the internet, 6 degrees of separation from <article title>. The following steps will allow you to reproduce the project:
 
 ##Steps
 

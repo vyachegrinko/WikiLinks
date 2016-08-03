@@ -33,7 +33,7 @@ def find_all_nodes(graph, start='World War II'): #graph is a tuple of (node, (tu
             path_dict_out[title] = ([],-1)
     return path_dict_out, dist
 
-target = 'World War II'
+target = 'Steve Martin'
 path_dict_out, max_dist = find_all_nodes(graph,start=target)
 
 #identify nodes that the target failed to connect with by labelling these nodes with an empty list and a degree of separation of -1
@@ -50,11 +50,13 @@ for k,v in dist_dict.iteritems():
     x.append(k)
     y.append(v)
 
-current_palette = sns.color_palette(sns.diverging_palette(145, 280, s=85, l=25, n=max_dist))
-sns.barplot(x,y,palette=current_palette)
-plt.title('Path Distances from the "{}" Article'.format(target),fontsize=32)
-plt.xlabel('distance',fontsize=22)
-plt.ylabel('article count',fontsize=22)
+#current_palette = sns.color_palette(sns.diverging_palette(145, 280, s=85, l=25, n=max_dist))
+sns.set_color_codes('deep')
+
+sns.barplot(x,y,color='b')
+plt.title('Path Distances from the "{}" Article'.format(target),fontsize=22)
+plt.xlabel('distance',fontsize=18)
+plt.ylabel('article count',fontsize=18)
 plt.ylim(0,20000)
-plt.tick_params(labelsize=18)
+plt.tick_params(labelsize=15)
 plt.show()
