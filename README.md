@@ -10,10 +10,8 @@ This project explores the connections between pages in wikipedia and serves as m
     for this project, I used the dump from Jul 6, 2016:
     https://dumps.wikimedia.org/enwiki/20160706/
 
-    ...and I utilized the following files:
-        enwiki-latest-pages-articles.xml.bz2 #53GB once unzipped!
-        enwiki-latest-pagelinks.sql.gz-rss.xml
-        enwiki-latest-all-titles.gz
+    specifically, this file:
+    enwiki-latest-pages-articles.xml.bz2 #53GB once unzipped!
 
     this wikipedia dump contains just shy of 15 million articles!
 
