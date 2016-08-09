@@ -13,7 +13,7 @@ echo $AWS__ACCESS_KEY_ID
 chmod 400 "student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem"
 
 ###launch ec2 cluster
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 1 --instance-type=cr1.8xlarge --copy-aws-credentials --ebs-vol-size=200 launch wiki_cluster_1s
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 -s 2 --instance-type=m2.4xlarge --copy-aws-credentials --ebs-vol-size=200 launch wiki_cluster
 
 -k: Name of your key-pair
 -i: Path to your (.pem) file
@@ -25,7 +25,7 @@ spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Se
 scp -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem student_work/Sean/wikilinks/install_scripts/install_these root@<masters public DNS>:/root/.
 
 ###log into master node
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster_1s
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i ~/student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 login wiki_cluster
 
 ###run install script
 source install_these
@@ -58,7 +58,7 @@ spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Se
 when paused, the cluster is only charged for storage space (not ec2 rental space)
 
 ###un-pause a cluster:
-spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 start wiki_cluster_1s
+spark-1.6.1-bin-hadoop1/ec2/spark-ec2 -k Galvanize_Sean_ONeal -i student_work/Sean/wikilinks/Galvanize_Sean_ONeal.pem -r us-east-1 start wiki_cluster
 
 ###ssh into EC2 instance:
 ssh -i "Galvanize_Sean_ONeal.pem" root@<masters public DNS>
